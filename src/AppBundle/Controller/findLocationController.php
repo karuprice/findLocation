@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,20 +21,25 @@ use Geocoder\Query\GeocodeQuery;
 class findLocationController extends Controller
 {
     /**
-     * @Route("/findlocation")
+     * @Route("/findlocation/{country}")
      */
 
-    public function indexAction(Request $request)
+    public function indexAction($country, Request $request)
     {
-
-
         $result = $this->container
             ->get('bazinga_geocoder.provider.acme')
             ->geocodeQuery(GeocodeQuery::create($request->server->get('REMOTE_ADDR')));
 
 
-        dump($result);
-            exit;
+//        dump($result);
+//            exit;
+
+        return $this->render('country/show.html.twig', [
+            'name' => $country
+        ]);
+
+//         return new Response('Your country is: ' .$country);
+
 
         // return new Response($result);
       //  return new Response(json_encode($result));
@@ -46,5 +52,29 @@ class findLocationController extends Controller
 
 
     }
+
+    /**
+     * @Route("/country/{country}/notes")
+     * @Method("GET")
+     */
+
+    public function getNotesAction()
+    {
+        $notes = [
+            ['id' => 1, 'username' => 'AquaPelham', 'avatarUri' => '/images/leanna.jpeg', 'note' => 'Octopus asked me a riddle, outsmarted me', 'date' => 'Dec. 10, 2015'],
+            ['id' => 2, 'username' => 'AquaWeaver', 'avatarUri' => '/images/ryan.jpeg', 'note' => 'I counted 8 legs... as they wrapped around me', 'date' => 'Dec. 1, 2015'],
+            ['id' => 3, 'username' => 'AquaPelham', 'avatarUri' => '/images/leanna.jpeg', 'note' => 'Inked!', 'date' => 'Aug. 20, 2015'],
+        ];
+
+        $data = [
+            'notes' => $notes
+        ];
+
+        return new JsonResponse($data);
+
+    }
+
+
+
 
 }
