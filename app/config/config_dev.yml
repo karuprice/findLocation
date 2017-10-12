@@ -42,5 +42,7 @@ monolog:
 
 # app/config/config_dev.yml
 bazinga_geocoder:
-    fake_ip:    123.123.123.123
+#    fake_ip:    123.123.123.123
+    fake_ip:    185.12.202.170
+
 

@@ -17,11 +17,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Geocoder\Query\GeocodeQuery;
 
-
 class findLocationController extends Controller
 {
     /**
-     * @Route("/findlocation/{country}/notes")
+     * @Route("/findlocation")
+     */
+
+    public function homeAction()
+    {
+        return new Response("Let's find out where you are!");
+    }
+
+
+
+    /**
+     * @Route("/geocoder/{country}")
      */
 
     public function indexAction($country, Request $request)
@@ -31,14 +41,18 @@ class findLocationController extends Controller
             ->geocodeQuery(GeocodeQuery::create($request->server->get('REMOTE_ADDR')));
 
 
-//        dump($result);
-//            exit;
+        dump($result);
+            exit;
 
-        return $this->render('country/show.html.twig', [
-            'name' => $country
-        ]);
+//        return $this->render('country/show.html.twig', [
+//            'name' => $country
+//        ]);
 
-//         return new Response('Your country is: ' .$country);
+         return new Response('Your country is the UK');
+
+
+
+
 
 
         // return new Response($result);
@@ -54,17 +68,21 @@ class findLocationController extends Controller
     }
 
     /**
-     * @Route("/country/{country}/notes", name="country_show_notes")
+     * @Route("/api")
      * @Method("GET")
      */
 
     public function getNotesAction()
     {
         $notes = [
-            ['id' => 1, 'username' => 'AquaPelham', 'avatarUri' => '/images/leanna.jpeg', 'note' => 'Octopus asked me a riddle, outsmarted me', 'date' => 'Dec. 10, 2015'],
-            ['id' => 2, 'username' => 'AquaWeaver', 'avatarUri' => '/images/ryan.jpeg', 'note' => 'I counted 8 legs... as they wrapped around me', 'date' => 'Dec. 1, 2015'],
-            ['id' => 3, 'username' => 'AquaPelham', 'avatarUri' => '/images/leanna.jpeg', 'note' => 'Inked!', 'date' => 'Aug. 20, 2015'],
+            ['id' => 1, 'name' => 'Afghanistan', 'flag' => 'https://restcountries.eu/data/afg.svg'],
+            ['id' => 2, 'name' => 'United Kingdom of Great Britain and Northern Ireland', 'flag' => 'https://restcountries.eu/data/gbr.svg'],
+            ['id' => 3, 'name' => 'Japan', 'flag' => 'https://restcountries.eu/data/jpn.svg'],
+            ['id' => 4, 'name' => 'Italy', 'flag' => 'https://restcountries.eu/data/ita.svg'],
         ];
+
+
+
 
         $data = [
             'notes' => $notes
