@@ -21,7 +21,7 @@ use Geocoder\Query\GeocodeQuery;
 class findLocationController extends Controller
 {
     /**
-     * @Route("/findlocation/{country}")
+     * @Route("/findlocation/{country}/notes")
      */
 
     public function indexAction($country, Request $request)
@@ -54,7 +54,7 @@ class findLocationController extends Controller
     }
 
     /**
-     * @Route("/country/{country}/notes")
+     * @Route("/country/{country}/notes", name="country_show_notes")
      * @Method("GET")
      */
 
